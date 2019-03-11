@@ -37,6 +37,8 @@ def main():
             threads.append(line[4])
             times.append(line[5])
             numTargets = numTargets + 1
+    else:
+        print("No filename given.")
 
     start_time = time.time()
 
