@@ -16,7 +16,7 @@ class Botnet:
     def Login(self):
         try:
             s = pxssh.pxssh()
-            s.login(self.host,self.user,self.password)
+            s.login(self.host, self.user, self.password)
             return s
         except Exception as e:
             print(e)
@@ -29,13 +29,13 @@ class Botnet:
         print("-" * 50)
         print("\n")
 
-        print("{}@{} commands' output ".format(self.user,self.host))
+        print("{}@{} commands' output ".format(self.user, self.host))
         print(self.session.before)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--b","--botnet-list", help="Please enter the botnet list file")
+    parser.add_argument("--b", "--botnet-list", help="Please enter the botnet list file")
     args = parser.parse_args()
     with open(args.b, "r") as file:
         computer_list = file.readlines()
