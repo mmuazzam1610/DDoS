@@ -9,11 +9,11 @@ class Botnet:
         self.user = user
         self.password = password
 
-        self.session = self.Login()
+        self.session = self.login()
         if self.session:
-            self.SendCommand(cmd)
+            self.sendCommand(cmd)
 
-    def Login(self):
+    def login(self):
         try:
             s = pxssh.pxssh()
             s.login(self.host, self.user, self.password)
@@ -22,14 +22,15 @@ class Botnet:
             print(e)
             return False
 
-    def SendCommand(self, cmd):
+    def sendCommand(self, cmd):
         self.session.sendline(cmd)
         self.session.prompt()
 
         print("-" * 50)
-        print("\n")
+        print()
+        print()
 
-        print("{}@{} commands' output ".format(self.user, self.host))
+        print("commands' output ".format(self.user, self.host))
         print(self.session.before)
 
 
@@ -38,16 +39,9 @@ if __name__ == "__main__":
     parser.add_argument("--b", "--botnet-list", help="Please enter the botnet list file")
     args = parser.parse_args()
     with open(args.b, "r") as file:
-        computer_list = file.readlines()
+        ssh_list = file.readlines()
 
-    command = ""
-    try:
-        command = input("Please enter the command which you want to output from botnet: ")
-        print()
-    except KeyboardInterrupt:
-        print("\n")
-        exit(0)
-    for i in computer_list:
+    for i in ssh_list:
         t = threading.Thread(target=Botnet, args=(i.strip("\n").split(",")[0], i.strip("\n").split(",")[1],
-                                                  i.strip("\n").split(",")[2], command))
+                                                  i.strip("\n").split(",")[2], "python " + i.strip("\n").split(",")[3]))
         t.start()
